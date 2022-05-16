@@ -39,12 +39,15 @@ class Application():
         brickblock.start_game('1')
 
     def start_level2(self):
+        self.game_label.quit()
         brickblock.start_game('2')
 
     def start_level3(self):
+        self.game_label.quit()
         brickblock.start_game('3')
 
     def exit(self):
+        self.game_label.quit()
         print("Has acabado de jugar")
 
 

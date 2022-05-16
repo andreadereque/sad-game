@@ -1,7 +1,10 @@
 import sys
 import time
 
+import keyboard
 import pygame
+
+import main
 from Ball import Ball
 from Blocks import Blocks
 from Platform import Platform
@@ -16,7 +19,6 @@ def start_game(level):
     global lives
     global gamePointsList
     global levelOfTheGame
-
 
     gameDisplay = pygame.display.set_mode((constants.WIDTH, constants.LARGE))
     pygame.display.set_caption("Bricks Block Break Game")
@@ -52,11 +54,11 @@ def start_game(level):
                         if levelOfTheGame == '3':
                             ball.speed = [5, -5]
                     else:
-                        if levelOfTheGame =='1':
+                        if levelOfTheGame == '1':
                             ball.speed = [-3, -3]
-                        if levelOfTheGame =='2':
+                        if levelOfTheGame == '2':
                             ball.speed = [-4, -4]
-                        if levelOfTheGame =='3':
+                        if levelOfTheGame == '3':
                             ball.speed = [-5, -5]
         if timeBetweenLives == False:
             ball.updateBallPosition()
@@ -98,21 +100,31 @@ def start_game(level):
 
 
 def end_game():
-
-
     font = pygame.font.SysFont('Arial', 70)
-    fontPoints = pygame.font.SysFont('Arial', 20)
+    fontInstructions = pygame.font.SysFont('Arial', 20)
     text = font.render('End game', True, constants.WHITECOLOUR)
-    pointsString = fontPoints.render('Points', showPoints(), constants.WHITECOLOUR)
-    points_rect = text.get_rect()
+    instructionString = fontInstructions.render('Instructions: \n  1. Press space. \n 2. Press the desired level 1,'
+                                                '2 or 3.', '', constants.WHITECOLOUR)
+    instructions_rect = text.get_rect()
     text_rect = text.get_rect()
-    points_rect.center = [constants.WIDTH/2, constants.LARGE/2 + 100]
+    instructions_rect.center = [constants.WIDTH / 2, constants.LARGE / 2 + 100]
     text_rect.center = [constants.WIDTH / 2, constants.LARGE / 2]
     gameDisplay.blit(text, text_rect)
-    gameDisplay.blit(pointsString,points_rect)
+    gameDisplay.blit(instructionString, instructions_rect)
     pygame.display.flip()
-    time.sleep(3)
-    sys.exit()
+    waitUntil(pygame.event.get() == pygame.K_SPACE, outputFunction())
+
+
+'''    if pygame.event.get() == pygame.K_1:
+        print("level 1")
+        newLevel = '1'
+    elif pygame.event.get() == pygame.K_2:
+        print("level 2")
+        newLevel = '2'
+    elif pygame.event.get() == pygame.k_3:
+        print("level 3")
+        newLevel = '3'
+    start_game(newLevel)'''
 
 
 def showPoints():
@@ -123,12 +135,12 @@ def showPoints():
     text_rect.topright = [constants.WIDTH, 0]
     gameDisplay.blit(text, text_rect)
 
+
 def savePoints():
     global points
     global gamePointList
     gamePointList.append(points)
     return gamePointList
-
 
 
 def showLives():
@@ -139,3 +151,29 @@ def showLives():
     text_rect = text.get_rect()
     text_rect.bottomright = [constants.WIDTH, constants.LARGE]
     gameDisplay.blit(text, text_rect)
+
+
+def outputFunction():
+    while True:
+        if keyboard.read_key() == "1":
+            print("You pressed 1")
+            main.Application.start_level1("1")
+            break
+        elif keyboard.read_key() == "2":
+            print("You pressed 2")
+            main.Application.start_level1("2")
+            break
+        if keyboard.read_key() == "3":
+            print("You pressed 3")
+            main.Application.start_level1("3")
+            break
+
+
+# aquesta funcio lhem tret de https://www.codegrepper.com/code-examples/python/frameworks/-file-path-python/python+wait+until+time
+def waitUntil(condition, output):  # defines function
+    wU = True
+    while wU == True:
+        if condition:  # checks the condition
+            output
+            wU = False
+        time.sleep(60)  # waits 60s for preformance

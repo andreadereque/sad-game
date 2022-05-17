@@ -9,6 +9,7 @@ from Ball import Ball
 from Blocks import Blocks
 from Platform import Platform
 import constants
+from main import Application
 
 pygame.init()
 
@@ -33,6 +34,7 @@ def start_game(level):
     lives = 3
     gamePointsList = []
     timeBetweenLives = True
+    showLevels()
     while True:
         clock.tick(60)
 
@@ -90,6 +92,7 @@ def start_game(level):
         gameDisplay.fill(constants.BGCOLOUR)
         showPoints()
         showLives()
+        showLevels()
         # blit sirve para dibujar una superficie sobre otra en la posición que le indicamos mediante coordenadas
         gameDisplay.blit(ball.image, ball.rect)
         gameDisplay.blit(platform.image, platform.rect)
@@ -143,6 +146,17 @@ def savePoints():
     return gamePointList
 
 
+def showLevels():
+    global levelOfTheGame
+    global gameDisplay
+    fonts = pygame.font.SysFont('Arial', 16)
+    levelString = "Level: " + levelOfTheGame.zfill(2)
+    text = fonts.render(levelString, True, constants.WHITECOLOUR)
+    text_rect = text.get_rect()
+    text_rect.topleft = [0, 0]
+    gameDisplay.blit(text, text_rect)
+
+
 def showLives():
     global lives
     fonts = pygame.font.SysFont('Arial', 16)
@@ -153,20 +167,27 @@ def showLives():
     gameDisplay.blit(text, text_rect)
 
 
+# hi ha algo que no està bé amb el self.App
 def outputFunction():
+
+    global levelOfTheGame
     while True:
         if keyboard.read_key() == "1":
+            levelOfTheGame = '1'
             print("You pressed 1")
-            main.Application.start_level1("1")
+            start_game('1')
             break
-        elif keyboard.read_key() == "2":
+        if keyboard.read_key() == "2":
+            levelOfTheGame = '2'
             print("You pressed 2")
-            main.Application.start_level1("2")
+            start_game('2')
             break
         if keyboard.read_key() == "3":
+            levelOfTheGame = '3'
             print("You pressed 3")
-            main.Application.start_level1("3")
+            start_game('3')
             break
+
 
 
 # aquesta funcio lhem tret de https://www.codegrepper.com/code-examples/python/frameworks/-file-path-python/python+wait+until+time

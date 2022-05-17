@@ -1,15 +1,19 @@
+import pygame
+
+import constants
+
+
 class Objects(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, position):
 
         #https://www.pygame.org/docs/ref/sprite.html
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load('brickblocks/start.png')
+        self.image = pygame.image.load('brickblocks/thunder.png')
+
         self.rect = self.image.get_rect()
+        self.rect.topleft = position
 
-        self.rect.centerx = constants.WIDTH / 2
-        self.rect.centery = constants.LARGE / 2
 
-        #add start speed
-        self.speed = [3, 3]
+
